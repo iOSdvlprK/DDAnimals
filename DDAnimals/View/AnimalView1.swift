@@ -22,8 +22,7 @@ struct AnimalView1: View {
                 // flags
                 Text("Flags")
                     .padding()
-                
-                
+                  
                 // animal image
                 let currentAnimalModel: AnimalModel = animalViewModel.animalModels[currentImageIndex]
                 
@@ -42,6 +41,11 @@ struct AnimalView1: View {
                         .foregroundStyle(.white)
                         .onTapGesture {
                             print("Left")
+                            // decrease currentImageIndex safely
+                            currentImageIndex = currentImageIndex - 1
+                            if currentImageIndex < 0 {
+                                currentImageIndex = animalViewModel.animalModels.count - 1
+                            }
                         }
                     
                     Spacer()
@@ -52,6 +56,10 @@ struct AnimalView1: View {
                         .foregroundStyle(.white)
                         .onTapGesture {
                             print("Right")
+                            currentImageIndex = currentImageIndex + 1
+                            if currentImageIndex > animalViewModel.animalModels.count - 1 {
+                                currentImageIndex = 0
+                            }
                         }
                 }
                 .padding()
