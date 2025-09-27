@@ -20,8 +20,36 @@ struct AnimalView1: View {
             
             VStack {
                 // flags
-                Text("Flags")
-                    .padding()
+                HStack {
+                    ForEach(languageViewModel.languageModels) { languageModel in
+                        let selected = currentLanguage == languageModel.language
+                        
+                        VStack(spacing: 0) {
+                            let text = languageModel.language.rawValue
+                            
+                            Text(text)
+                                .font(.body)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.white)
+                            
+                            if let flag = languageModel.flag {
+                                Image(flag.rawValue)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .shadow(radius: 5)
+                            }
+                        }
+                        .padding()
+                        .opacity(selected ? 1 : 0.7)
+                        .scaleEffect(selected ? 1.2 : 1)
+                        .onTapGesture {
+                            withAnimation {
+                                currentLanguage = languageModel.language
+                            }
+                        }
+                    }
+                }
                   
                 // animal image
                 let currentAnimalModel: AnimalModel = animalViewModel.animalModels[currentImageIndex]
